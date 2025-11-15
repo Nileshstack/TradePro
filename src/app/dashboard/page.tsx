@@ -145,16 +145,7 @@ export default function DashboardPage() {
               </tr>
             </thead>
 
-            <tbody>
-              {portfolio.positions.map((pos) => (
-                <tr key={pos.id} className="border-b last:border-none">
-                  <td className="py-2">{pos.id}</td>
-                  <td>{pos.quantity}</td>
-                  <td>₹{pos.avgPrice.toFixed(2)}</td>
-                  <td>₹{(pos.avgPrice * pos.quantity).toFixed(2)}</td>
-                </tr>
-              ))}
-            </tbody>
+            
           </table>
         )}
       </div>
