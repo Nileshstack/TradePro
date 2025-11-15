@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "NullClass",
+  title: "TradePro",
   description: "Simulated trading and analytics platform",
 };
 
