@@ -11,7 +11,7 @@ interface StatCard {
   positive?: boolean;
 }
 
-export default function AnalyticsPage(): JSX.Element {
+export default function AnalyticsPage() {
   const {  user } = useAuth();
    const router = useRouter();
   useEffect(() => {

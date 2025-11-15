@@ -5,40 +5,33 @@ import { usePortfolio } from "../../context/PortfolioContext";
 import { useAuth } from "@/context/AuthContext";
 import { useRouter } from "next/navigation";
 
-interface Position {
-  id: string;
-  quantity: number;
-  avgPrice: number;
-}
-
-export default function DashboardPage(): JSX.Element {
-  const {  user } = useAuth();
-     const router = useRouter();
-    useEffect(() => {
-        if (!user) {
-          router.replace("/login");
-        }
-      }, [user, router]);
+export default function DashboardPage() {
+  const { user } = useAuth();
+  const router = useRouter();
   const { portfolio } = usePortfolio();
 
-  const positionsValue: number = portfolio.positions.reduce(
-    (s, p) => s + p.quantity * p.avgPrice,
+  useEffect(() => {
+    if (!user) {
+      router.replace("/login");
+    }
+  }, [user, router]);
+
+  const positionsValue = portfolio.positions.reduce(
+    (sum, pos) => sum + pos.quantity * pos.avgPrice,
     0
   );
 
-  const equity: number = portfolio.cash + positionsValue;
-
-  const invested: number = Math.max(positionsValue, 0);
-  const dailyPL: number = Number((Math.random() * 200 - 100).toFixed(2));
-  const returns: number = Number((equity - 1000000).toFixed(2));
-  const winRate: string = "62%";
+  const equity = portfolio.cash + positionsValue;
+  const invested = Math.max(positionsValue, 0);
+  const dailyPL = Number((Math.random() * 200 - 100).toFixed(2));
+  const returns = Number((equity - 1000000).toFixed(2));
+  const winRate = "62%";
 
   return (
     <main
       className="mx-auto max-w-6xl p-6 space-y-8"
       style={{ minHeight: "93vh" }}
     >
-
       <div>
         <h1 className="text-3xl font-bold text-slate-800">
           Analytics Dashboard
@@ -48,9 +41,7 @@ export default function DashboardPage(): JSX.Element {
         </p>
       </div>
 
-
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-
         <div className="rounded-xl border bg-white/70 p-4 shadow-sm">
           <div className="text-xs text-slate-500">Daily P&L</div>
           <div
@@ -87,7 +78,6 @@ export default function DashboardPage(): JSX.Element {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-
         <div className="rounded-xl border bg-white/70 p-6 shadow-sm">
           <h2 className="text-lg font-semibold text-slate-700">
             Portfolio Summary
@@ -156,7 +146,7 @@ export default function DashboardPage(): JSX.Element {
             </thead>
 
             <tbody>
-              {portfolio.positions.map((pos: Position) => (
+              {portfolio.positions.map((pos) => (
                 <tr key={pos.id} className="border-b last:border-none">
                   <td className="py-2">{pos.id}</td>
                   <td>{pos.quantity}</td>
@@ -168,7 +158,6 @@ export default function DashboardPage(): JSX.Element {
           </table>
         )}
       </div>
-
 
       <div className="rounded-xl border bg-white/70 p-6 shadow-sm">
         <h2 className="text-lg font-semibold text-slate-700 mb-2">
